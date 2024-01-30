@@ -1,0 +1,38 @@
+
+
+###### Análise CNA Tese
+
+###### Instalação de pacotes
+
+### Pacotes
+library(cna)
+library(frscore)
+library(readxl)
+
+### Importando o banco de dados cna02
+cna02 = read_excel("cna02.xlsx")
+DF_cna02 = data.frame(cna02)
+options(max.print = 999999999)
+DF_cna02
+
+
+## Análise CNA
+start_time <- Sys.time()
+resultado_cna02_B <- frscored_cna(DF_cna02, fit.range = c(1, 0.7), granularity = 0.1, 
+                                  outcome = "ASR",
+                                  strict = T, 
+                                  output="csf",
+                                  type="cs", 
+                                  maxsols=50, 
+                                  maxstep = c(3,4,10),
+                                  print.all = FALSE)
+
+end_time3 <- Sys.time()
+speed <- difftime(end_time3, start_time, units = "secs")
+speed
+
+## Salvando os resultados 
+View(resultado_cna02_B$rean_models)
+write.csv(resultado_cna02_B$rean_models, "Resultado_cna02_B.csv")
+
+
